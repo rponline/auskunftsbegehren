@@ -58,4 +58,9 @@ public class Address
 	{
 		return new String[]{firstname + " " + lastname, street + " " + number, postalcode + " " + city, country};
 	}
+
+	public String toString()
+	{
+		return firstname + " " + lastname + ", " + street + " " + number + ", " + postalcode + " " + city + ", " + country;
+	}
 }
