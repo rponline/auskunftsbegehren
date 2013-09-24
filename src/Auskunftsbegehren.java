@@ -10,8 +10,9 @@ public class Auskunftsbegehren
 	private static final String NOTICE = "Hinweis: Dieses Dokument ist (mittels Bürgerkarte) mit einer qualifizierten elektronischen Signatur\nversehen, diese ist laut SigG § 4 rechtlich einer händischen Unterschrift gleichgestellt. Diese Signatur\nkann unter anderem unter http://www.signaturpruefung.gv.at überprüft werden. Eine qualifizierte\nelektronische Signatur ist, da ich als Signator unter alleiniger Kontrolle des Schlüssels bin, ein\nIdentitätsnachweis im Sinne von DSG §26 (1)";
 
 	private DINLetter ab;
+	private Address from;
 
-	public Auskunftsbegehren()
+	public Auskunftsbegehren() throws IOException
 	{
 		ab = new DINLetter();
 		// TODO: read language specific wording 
@@ -19,6 +20,7 @@ public class Auskunftsbegehren
 
 	public void setSender(Address from)
 	{
+		this.from = from;
 		ab.setSender(from);
 	}
 
@@ -29,11 +31,11 @@ public class Auskunftsbegehren
 
 	public void save(String path) throws IOException, COSVisitorException
 	{
-		dl.setSubject(SUBJECT);
-		dl.setContent(CONTENT);
-		dl.setGreeting(GREETING,from);
-		dl.setNotice(NOTICE);
-		dl.setFoldingmark(true);
-		dl.save(path);
+		ab.setSubject(SUBJECT);
+		ab.setContent(CONTENT);
+		ab.setGreeting(GREETING,this.from);
+		ab.setNotice(NOTICE);
+		ab.setFoldingmark(true);
+		ab.save(path);
 	}
 }
