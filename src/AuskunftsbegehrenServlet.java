@@ -2,6 +2,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 import org.apache.pdfbox.exceptions.COSVisitorException;
+import java.util.Map;
 
 public class AuskunftsbegehrenServlet extends HttpServlet
 {
@@ -23,9 +24,16 @@ public class AuskunftsbegehrenServlet extends HttpServlet
 
 	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException
 	{
-		// TODO: read user data
-		Address from = new Address("Hermann","Wilhelm","Christophgasse","13/5","1050","Wien","Österreich");
-		Address to = new Address("Maximilia","Mustermann","Sternenstraße","7a","1234","Wien","Österreich");
+		// Default User Data
+		Address from = new Address("Erika","Mustermann","Christophgasse","13/5","4321","Wien","Österreich");
+		Address to = new Address("Maximilia","Musterfrau","Musterstraße","7a","1234","Wien","Österreich");
+
+		// Read User Data from Post Data
+		Map<String,String[]> params = req.getParameterMap();
+		if(!params.isEmpty()) {
+			from = readSenderAddress(params);
+			to = readRecipientAddress(params);
+		}
 
 		// Generate unique file name for PDF
 		String realFilename = generateUniqueFilename(req.getSession());
@@ -46,6 +54,32 @@ public class AuskunftsbegehrenServlet extends HttpServlet
 		// Remove generated File
 		File file = new File(realFilename);
 		file.delete();
+	}
+
+	private Address readSenderAddress(Map<String,String[]> params)
+	{
+		String sFirstname = params.get("sFirstname")[0];
+		String sLastname = params.get("sLastname")[0];
+		String sStreet = params.get("sStreet")[0];
+		String sNumber= params.get("sNumber")[0];
+		String sPostal= params.get("sPostal")[0];
+		String sCity= params.get("sCity")[0];
+		String sCountry= params.get("sCountry")[0];
+
+		return new Address(sFirstname,sLastname,sStreet,sNumber,sPostal,sCity,sCountry);
+	}
+
+	private Address readRecipientAddress(Map<String,String[]> params)
+	{
+		String rFirstname = params.get("rFirstname")[0];
+		String rLastname = params.get("rLastname")[0];
+		String rStreet = params.get("rStreet")[0];
+		String rNumber= params.get("rNumber")[0];
+		String rPostal= params.get("rPostal")[0];
+		String rCity= params.get("rCity")[0];
+		String rCountry= params.get("rCountry")[0];
+
+		return new Address(rFirstname,rLastname,rStreet,rNumber,rPostal,rCity,rCountry);
 	}
 
 	private String generateUniqueFilename(HttpSession session)
