@@ -32,6 +32,7 @@
 	<target name="war" depends="compile">
 		<war destfile="${build.dir}/${ant.project.name}.war" webxml="conf/web.xml">
 			<classes dir="${classes.dir}" />
+			<lib dir="${include.dir}" />
 		</war>
 	</target>
 
