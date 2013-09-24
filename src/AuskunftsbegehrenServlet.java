@@ -28,6 +28,9 @@ public class AuskunftsbegehrenServlet extends HttpServlet
 		Address from = new Address("Erika","Mustermann","Christophgasse","13/5","4321","Wien","Österreich");
 		Address to = new Address("Maximilia","Musterfrau","Musterstraße","7a","1234","Wien","Österreich");
 
+		// set encoding of request
+		req.setCharacterEncoding("UTF-8");
+
 		// Read User Data from Post Data
 		Map<String,String[]> params = req.getParameterMap();
 		if(!params.isEmpty()) {
