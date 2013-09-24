@@ -1,0 +1,11 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+	<servlet>
+		<servlet-name>AuskunftsbegehrenServlet</servlet-name>
+		<servlet-class>AuskunftsbegehrenServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AuskunftsbegehrenServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+</web-app>
