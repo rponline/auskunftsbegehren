@@ -10,6 +10,13 @@ public class AuskunftsbegehrenServlet extends HttpServlet
 
 	public void init(ServletConfig config)
 	{
+		try {
+			super.init(config);
+		}
+		catch(ServletException e) {
+			e.printStackTrace();
+			// TODO: show error message
+		}
 		// Save Current Path
 		path = getServletContext().getRealPath("") + File.separator;
 	}
