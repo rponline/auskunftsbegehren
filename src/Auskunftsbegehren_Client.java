@@ -1,5 +1,6 @@
 import java.lang.Exception;
 import java.util.Scanner;
+import java.util.Locale;
 
 public class Auskunftsbegehren_Client
 {
@@ -39,7 +40,7 @@ public class Auskunftsbegehren_Client
 		String path = scanner.nextLine();
 
 		try {
-			Auskunftsbegehren ab = new Auskunftsbegehren();
+			Auskunftsbegehren ab = new Auskunftsbegehren(Locale.GERMAN);
 			ab.setSender(from);
 			ab.setRecipient(to);
 			ab.save(path);

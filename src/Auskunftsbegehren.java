@@ -1,21 +1,20 @@
 import java.io.IOException;
 import org.apache.pdfbox.exceptions.COSVisitorException;
+import java.util.ResourceBundle;
+import java.util.MissingResourceException;
+import java.util.Locale;
 
 public class Auskunftsbegehren
 {
-	// TODO: retrieve these wordings from languange file
-	private static final String SUBJECT = "Auskunftsbegehren gemäß DSG § 26";
-	private static final String CONTENT = "Gemäß DSG 2000 begehre ich Auskunft über alle über mich gespeicherten\npersonenbezogenen Daten.\n\nDie Auskunft hat die verarbeiteten Daten, die Informationen über ihre Herkunft, allfällige\nEmpfänger oder Empfängerkreise von Übermittlungen, den Zweck der Datenverwendung\nsowie die Rechtsgrundlagen hiefür in allgemein verständlicher Form anzuführen.\n\nGemäß DSG besteht eine Verpflichtung zur Auskunft binnen 8 Wochen.";
-	private static final String GREETING = "Mit freundlichen Grüßen";
-	private static final String NOTICE = "Hinweis: Dieses Dokument ist (mittels Bürgerkarte) mit einer qualifizierten elektronischen Signatur\nversehen, diese ist laut SigG § 4 rechtlich einer händischen Unterschrift gleichgestellt. Diese Signatur\nkann unter anderem unter http://www.signaturpruefung.gv.at überprüft werden. Eine qualifizierte\nelektronische Signatur ist, da ich als Signator unter alleiniger Kontrolle des Schlüssels bin, ein\nIdentitätsnachweis im Sinne von DSG §26 (1)";
-
 	private DINLetter ab;
 	private Address from;
+	private static final String baseName = "Auskunftsbegehren";
+	private ResourceBundle bundle;
 
-	public Auskunftsbegehren() throws IOException
+	public Auskunftsbegehren(Locale targetLocale) throws IOException, MissingResourceException
 	{
 		ab = new DINLetter();
-		// TODO: read language specific wording 
+		bundle = ResourceBundle.getBundle(baseName,targetLocale);
 	}
 
 	public void setSender(Address from)
@@ -31,10 +30,10 @@ public class Auskunftsbegehren
 
 	public void save(String path) throws IOException, COSVisitorException
 	{
-		ab.setSubject(SUBJECT);
-		ab.setContent(CONTENT);
-		ab.setGreeting(GREETING,this.from);
-		ab.setNotice(NOTICE);
+		ab.setSubject(bundle.getString("subject"));
+		ab.setContent(bundle.getString("content"));
+		ab.setGreeting(bundle.getString("greeting"),this.from);
+		ab.setNotice(bundle.getString("notice"));
 		ab.setFoldingmark(true);
 		ab.save(path);
 	}
