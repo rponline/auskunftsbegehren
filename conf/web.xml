@@ -8,6 +8,10 @@
 		<servlet-class>DownloadAuskunftsbegehrenServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>Send</servlet-name>
+		<servlet-class>SendAuskunftsbegehrenServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>Delete</servlet-name>
 		<servlet-class>DeleteAuskunftsbegehrenServlet</servlet-class>
 	</servlet>
@@ -19,6 +23,10 @@
 	<servlet-mapping>
 		<servlet-name>Download</servlet-name>
 		<url-pattern>/download</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Send</servlet-name>
+		<url-pattern>/send</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Delete</servlet-name>

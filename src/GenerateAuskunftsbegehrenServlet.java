@@ -57,11 +57,13 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 
 		// save information to session
 		session.setAttribute("lastname",from.getLastname());
+		session.setAttribute("firstname",from.getFirstname());
 		session.setAttribute("filename",realFilename);
 		session.setAttribute("isSigned",new Boolean(false));
 		session.setAttribute("isSent",new Boolean(false));
-
-		// TODO: sent success
+		// TODO: don't hardcode this
+		session.setAttribute("mailRecipient","test@n0g.at");
+		session.setAttribute("mailSender","test@n0g.at");
 	}
 
 	private Address readSenderAddress(Map<String,String[]> params)
