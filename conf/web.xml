@@ -1,11 +1,27 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
 	<servlet>
-		<servlet-name>AuskunftsbegehrenServlet</servlet-name>
-		<servlet-class>AuskunftsbegehrenServlet</servlet-class>
+		<servlet-name>Generate</servlet-name>
+		<servlet-class>GenerateAuskunftsbegehrenServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Download</servlet-name>
+		<servlet-class>DownloadAuskunftsbegehrenServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Delete</servlet-name>
+		<servlet-class>DeleteAuskunftsbegehrenServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>AuskunftsbegehrenServlet</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<servlet-name>Generate</servlet-name>
+		<url-pattern>/generate</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Download</servlet-name>
+		<url-pattern>/download</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Delete</servlet-name>
+		<url-pattern>/delete</url-pattern>
 	</servlet-mapping>
 </web-app>

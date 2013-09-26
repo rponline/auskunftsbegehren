@@ -2,7 +2,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 
-public class DownloadAuskunftsbegehrenServlet extends HttpServlet
+public class DeleteAuskunftsbegehrenServlet extends HttpServlet
 {
 	private HttpSession session;
 
@@ -17,7 +17,7 @@ public class DownloadAuskunftsbegehrenServlet extends HttpServlet
 		boolean isSigned = ((Boolean) session.getAttribute("isSigned")).booleanValue();
 		
 		// Remove generated File
-		File file = new File(realFilename);
+		File file = new File(filename);
 		file.delete();
 
 		if(isSigned) {
@@ -26,6 +26,7 @@ public class DownloadAuskunftsbegehrenServlet extends HttpServlet
 			file.delete();
 		}
 
-		// TODO: show success or fail
+		// delete session
+		session.invalidate();
 	}
 }

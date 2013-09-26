@@ -29,27 +29,14 @@ public class DownloadAuskunftsbegehrenServlet extends HttpServlet
 		// get information from session
 		String lastname = (String) session.getAttribute("lastname");
 		boolean isSigned = ((Boolean) session.getAttribute("isSigned")).booleanValue();
-
-		// Generate File Name
-		String realFilename = generateUniqueFilename(session,isSigned);
+		String filename = (String) session.getAttribute("filename");
+		if(isSigned) {
+			filename = (String) session.getAttribute("filenameSigned");
+		}
 
 		// Push it to the user
 		String userFilename = "Auskunftsbegehren-"+lastname+".pdf";
-		downloadFile(realFilename,userFilename,res);
-
-		// Remove generated File
-		File file = new File(realFilename);
-		file.delete();
-	}
-
-	private String generateUniqueFilename(HttpSession session,boolean isSigned)
-	{
-		String filename = path + session.getId();
-		if(isSigned) {
-			filename +="-signed";
-		}
-		filename += ".pdf";
-		return filename
+		downloadFile(filename,userFilename,res);
 	}
 
 	private void downloadFile(String path, String userFilename, HttpServletResponse res) throws IOException
