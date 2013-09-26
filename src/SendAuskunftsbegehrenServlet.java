@@ -46,6 +46,7 @@ public class SendAuskunftsbegehrenServlet extends HttpServlet
 		}
 		catch(MessagingException e) {
 			e.printStackTrace();
+			res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
 

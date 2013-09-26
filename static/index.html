@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Auskunftsbegehren</title>
+	<link rel="stylesheet" media="screen" href="auskunftsbegehren.css" type="text/css" />
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<script type="text/JavaScript" src="jquery.js"></script>
+</head>
+<body>
+<h1>Nutzen Sie Ihr Recht auf Auskunft!</h1>
+
+<h2>Ihr Recht</h2>
+<p>Viele Unternehmen und staatliche Institutionen speichern
+personenbezogene Daten über Sie. Das Datenschutzgesetz § 26 gibt Ihnen als
+betroffene Person besondere Rechte für diesen Fall. Ihnen muss einmal
+pro Jahr, sofern sie es verlangen, kostenfrei Auskunft über die Daten
+erteilt werden, die über sie gespeichert werden.</p>
+
+<p>Sie haben ebenfalls das Recht eine Richtigstellung bzw. Löschung
+dieser Daten zu fordern (DSG 2000 § 27) oder der Verwendung Ihrer Daten
+zu widersprechen (DSG 2000 § 28). Um von diesem Recht sinnvoll Gebrauch
+zu machen müssen Sie allerdings zu erst einmal Wissen welche Daten über
+Sie gespeichert werden.</p>
+
+<h2>Erstelle ein Auskunftsbegehren</h2>
+
+<form action="generate" id="dataForm">
+<table padding="10">
+  <tr>
+	<td><h4>Deine Adressdaten</td>
+	<td></td>
+  </tr>
+  <tr>
+    <td>Vorname:</td>
+    <td><input type="text" name="sFirstname"></td>
+  </tr>
+  <tr>
+    <td>Nachname:</td>
+    <td><input type="text" name="sLastname"></td>
+  </tr>
+  <tr>
+    <td>Straße:</td>
+    <td><input type="text" name="sStreet"></td>
+  </tr>
+  <tr>
+    <td>Hausnummer:</td>
+    <td><input type="text" name="sNumber"></td>
+  </tr>
+  <tr>
+    <td>Postleitzahl:</td>
+    <td><input type="text" name="sPostal"></td>
+  </tr>
+  <tr>
+    <td>Ort:</td>
+    <td><input type="text" name="sCity"></td>
+  </tr>
+  <tr>
+    <td>Staat:</td>
+    <td><input type="text" name="sCountry"></td>
+  </tr>
+  <tr>
+	<td><h4>Die Adressdaten des Auftraggebers</h4></td>
+	<td></td>
+  </tr>
+  <tr>
+    <td>Vorname:</td>
+    <td><input type="text" name="rFirstname"></td>
+  </tr>
+  <tr>
+    <td>Nachname:</td>
+    <td><input type="text" name="rLastname"></td>
+  </tr>
+  <tr>
+    <td>Straße:</td>
+    <td><input type="text" name="rStreet"></td>
+  </tr>
+  <tr>
+    <td>Hausnummer:</td>
+    <td><input type="text" name="rNumber"></td>
+  </tr>
+  <tr>
+    <td>Postleitzahl:</td>
+    <td><input type="text" name="rPostal"></td>
+  </tr>
+  <tr>
+    <td>Ort:</td>
+    <td><input type="text" name="rCity"></td>
+  </tr>
+  <tr>
+    <td>Staat:</td>
+    <td><input type="text" name="rCountry"></td>
+  </tr>
+	<tr>
+		<td><a href="javascript:generatePDF()" >Erstelle ein Auskunftsbegehren</a></td>
+		<td align="center"><div id="generateResult"></div></td>
+	</tr>
+	<tr>
+		<td><a href="download">Erstelltes Auskunftsbegehren probelesen</a></td>
+		<td align="center"></td>
+	</tr>
+	<tr>
+		<td><a href="javascript:sendPDF()">Auskunftsbegehren verschicken</a></td>
+		<td align="center"><div id="sendResult"></div></td>
+	</tr>
+	<tr>
+		<td><a href="javascript:deleteData()">Temporär generierte Daten vom Server löschen</a></td>
+		<td align="center"><div id="deleteResult"></div></td>
+	</tr>
+</table>
+</form>
+
+<script>
+	function generatePDF() {
+		var $form = $( "#dataForm" );
+		var url = $form.attr( "action" );
+
+		// Send the data using post
+		var posting = $.post( url, $("#dataForm").serialize() );
+
+		// Put the results in a div
+		posting.done(function( data ) {
+			$( "#generateResult" ).empty().append("&#10004;");
+		});
+
+		posting.fail(function( data ) {
+			$( "#generateResult" ).empty().append("&#10008;");
+		});
+	}
+
+	function deleteData() {
+		$.get( "delete")
+		.done(function (){
+			$( "#deleteResult" ).empty().append("&#10004;");
+		})
+		.fail(function() {
+			$( "#deleteResult" ).empty().append("&#10008;");
+		});
+	}
+
+	function sendPDF() {
+		$.get( "send")
+		.done(function (){
+			$( "#sendResult" ).empty().append("&#10004;");
+		})
+		.fail(function() {
+			$( "#sendResult" ).empty().append("&#10008;");
+		});
+	}
+</script>
+<h2>Zukünftige Verbesserungen</h2>
+<ul>
+	<li>Zusätzliches Feld um eventuelle Daten im Zuge der
+	Mitwirkungspflicht anzugeben</li>
+	<li>Signatur des PDFs mittels Bürgerkarte</li>
+	<li>Versenden des Auskunftsbegehrens per E-Mail</li>
+	<li>Auswahl des Auftraggebers aus einer Liste</li>
+	<li>Website Design aus diesem Jahrtausend</li>
+	<li>Erinnerungs-Emails nach einem Jahr?</li>
+</ul>
+<h2>Kritik</h2>
+<p> Es wird zunehmend schwieriger im Überblick zu behalten welche
+Unternehmen Daten über Sie speichern. Vielfach ist es Ihnen vielleicht
+gar nicht bewusst welche Unternehmen oder Institutionen Daten über Sie
+speichern. Das macht es wahnsinnig schwer die Verwendung Ihrer Daten
+unter Kontrolle zu halten. Regelmäßig Auskunftsbegehren zu verschicken
+wird Ihnen wahrscheinlich nur einen groben Überblick verschaffen.</p>
+
+<p>Viel sinnvoller wäre es hingegen aus der Holschuld eine Bringschuld
+zu machen und Firmen dazu verpflichten Ihnen von sich aus regelmäßig
+Auskunft über Ihre Daten zu geben. Damit wären Sie immer im Bild und
+hätten das richtige Maß an Kontrolle. Außerdem würden sich Unternehmen
+vielleicht etwas genauer überlegen ob sie überhaupt Ihre Daten
+benötigen, denn es ist natürlich ein großer Aufwand jährlich Briefe an
+alle Personen zu schicken über die man Daten speichert.</p>
+
+<h3>Impressum</h3>
+Matthias Fassl<br />
+Kohlgasse 49/15<br />
+1050 Wien<br />
+<a
+href="mailto:impressum@auskunftsbegehren.at">impressum@auskunftsbegehren.at</a>
+
+</body>
+</html>

@@ -52,7 +52,7 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 		}
 		catch(COSVisitorException e) {
 			e.printStackTrace();
-			// TODO: show error message
+			res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 
 		// save information to session
@@ -64,6 +64,9 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 		// TODO: don't hardcode this
 		session.setAttribute("mailRecipient","test@n0g.at");
 		session.setAttribute("mailSender","test@n0g.at");
+
+		// exit with nice status code
+		res.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
 	private Address readSenderAddress(Map<String,String[]> params)

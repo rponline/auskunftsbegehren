@@ -33,10 +33,21 @@ public class DownloadAuskunftsbegehrenServlet extends HttpServlet
 		if(isSigned) {
 			filename = (String) session.getAttribute("filenameSigned");
 		}
+		
+		// check for valid session data
+		if(lastname == null || filename == null) {
+			res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED );
+			return;
+		}
 
 		// Push it to the user
 		String userFilename = "Auskunftsbegehren-"+lastname+".pdf";
-		downloadFile(filename,userFilename,res);
+		try {
+			downloadFile(filename,userFilename,res);
+		}
+		catch(IOException e) {
+			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		}
 	}
 
 	private void downloadFile(String path, String userFilename, HttpServletResponse res) throws IOException
