@@ -12,18 +12,19 @@ public class DeleteAuskunftsbegehrenServlet extends HttpServlet
 		session = req.getSession();
 
 		// get information from session
-		String lastname = (String) session.getAttribute("lastname");
 		String filename = (String) session.getAttribute("filename");
-		boolean isSigned = ((Boolean) session.getAttribute("isSigned")).booleanValue();
+		String filenameSigned = (String) session.getAttribute("filenameSigned");
 		
-		// Remove generated File
-		File file = new File(filename);
-		file.delete();
-
-		if(isSigned) {
-			String filenameSigned = (String) session.getAttribute("filenameSigned");
-			file = new File(filenameSigned);
+		// remove generated file
+		if(filename != null) {
+			File file = new File(filename);
 			file.delete();
+		}
+
+		// remove signed file
+		if(filenameSigned != null) {
+			File signedFile = new File(filenameSigned);
+			signedFile.delete();
 		}
 
 		// delete session

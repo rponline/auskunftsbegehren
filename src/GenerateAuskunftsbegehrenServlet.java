@@ -56,14 +56,9 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 		}
 
 		// save information to session
-		session.setAttribute("lastname",from.getLastname());
-		session.setAttribute("firstname",from.getFirstname());
+		session.setAttribute("fromAddress",from);
+		session.setAttribute("toAddress",to);
 		session.setAttribute("filename",realFilename);
-		session.setAttribute("isSigned",new Boolean(false));
-		session.setAttribute("isSent",new Boolean(false));
-		// TODO: don't hardcode this
-		session.setAttribute("mailRecipient","test@n0g.at");
-		session.setAttribute("mailSender","test@n0g.at");
 
 		// exit with nice status code
 		res.setStatus(HttpServletResponse.SC_CREATED);
@@ -78,21 +73,24 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 		String sPostal= params.get("sPostal")[0];
 		String sCity= params.get("sCity")[0];
 		String sCountry= params.get("sCountry")[0];
+		String sMailAddress= params.get("sMail")[0];
 
-		return new Address(sFirstname,sLastname,sStreet,sNumber,sPostal,sCity,sCountry);
+		return new Address(sFirstname,sLastname,"",sStreet,sNumber,sPostal,sCity,sCountry,sMailAddress);
 	}
 
 	private Address readRecipientAddress(Map<String,String[]> params)
 	{
 		String rFirstname = params.get("rFirstname")[0];
 		String rLastname = params.get("rLastname")[0];
+		String rCompany = params.get("rCompany")[0];
 		String rStreet = params.get("rStreet")[0];
 		String rNumber= params.get("rNumber")[0];
 		String rPostal= params.get("rPostal")[0];
 		String rCity= params.get("rCity")[0];
 		String rCountry= params.get("rCountry")[0];
+		String rMailAddress= params.get("rMail")[0];
 
-		return new Address(rFirstname,rLastname,rStreet,rNumber,rPostal,rCity,rCountry);
+		return new Address(rFirstname,rLastname,rCompany,rStreet,rNumber,rPostal,rCity,rCountry,rMailAddress);
 	}
 
 	private String generateUniqueFilename(HttpSession session)

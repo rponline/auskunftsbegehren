@@ -27,22 +27,22 @@ public class DownloadAuskunftsbegehrenServlet extends HttpServlet
 		session = req.getSession();
 
 		// get information from session
-		String lastname = (String) session.getAttribute("lastname");
-		Boolean isSigned = (Boolean) session.getAttribute("isSigned");
+		Address from = (Address) session.getAttribute("fromAddress");
 		String filename = (String) session.getAttribute("filename");
+		String filenameSigned = (String) session.getAttribute("filenameSigned");
 		
 		// check for valid session data
-		if(lastname == null || isSigned == null || filename == null) {
+		if(from == null || filename == null) {
 			res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED );
 			return;
 		}
 
-		if(isSigned.booleanValue()) {
-			filename = (String) session.getAttribute("filenameSigned");
+		if(filenameSigned != null) {
+			filename = filenameSigned;
 		}
 
 		// Push it to the user
-		String userFilename = "Auskunftsbegehren-"+lastname+".pdf";
+		String userFilename = "Auskunftsbegehren-"+from.getLastname()+".pdf";
 		try {
 			downloadFile(filename,userFilename,res);
 		}

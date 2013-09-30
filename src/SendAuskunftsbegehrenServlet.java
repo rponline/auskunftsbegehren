@@ -24,21 +24,29 @@ public class SendAuskunftsbegehrenServlet extends HttpServlet
 		session = req.getSession();
 
 		// get information from session
-		String lastname = (String) session.getAttribute("lastname");
-		String firstname = (String) session.getAttribute("firstname");
-		boolean isSigned = ((Boolean) session.getAttribute("isSigned")).booleanValue();
+		Address from = (Address) session.getAttribute("fromAddress");
+		Address to = (Address) session.getAttribute("toAddress");
 		String filename = (String) session.getAttribute("filename");
-		String mailRecipient = (String) session.getAttribute("mailRecipient");
-		String mailSender = (String) session.getAttribute("mailSender");
-		if(isSigned) {
-			filename = (String) session.getAttribute("filenameSigned");
+		String filenameSigned = (String) session.getAttribute("filenameSigned");
+
+		// validate session data
+		if(from == null || to == null || filename == null) {
+			res.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED );
+			return;
 		}
+
+		// parse session data
+		if(filenameSigned != null) {
+			filename = filenameSigned;
+		}
+		String mailRecipient = to.getMailAddress();
+		String mailSender = from.getMailAddress();
 
 		// generate mail content
 		String text = bundle.getString("mailText");
 		text += "\n\n" + bundle.getString("greeting") + ",\n";
-		text += firstname + " " + lastname;
-		String userFilename = "Auskunftsbegehren-"+lastname+".pdf";
+		text += from.getFirstname() + " " + from.getLastname();;
+		String userFilename = "Auskunftsbegehren-"+from.getLastname()+".pdf";
 
 		// send email
 		try {
