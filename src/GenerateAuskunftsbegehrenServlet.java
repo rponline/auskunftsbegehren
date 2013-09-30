@@ -29,8 +29,8 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 		session = req.getSession();
 
 		// Default User Data
-		Address from = new Address("Erika","Mustermann","Christophgasse","13/5","4321","Wien","Österreich");
-		Address to = new Address("Maximilia","Musterfrau","Musterstraße","7a","1234","Wien","Österreich");
+		Address from = new Address("Erika","Mustermann","","Christophgasse","13/5","4321","Wien","Österreich","test@auskunftsbegehren.at");
+		Address to = new Address("Maximilia","Musterfrau","Muster GmbH","Musterstraße","7a","1234","Wien","Österreich","test@auskunftsbegehren.at");
 
 		// set encoding of request
 		req.setCharacterEncoding("UTF-8");
