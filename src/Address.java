@@ -70,11 +70,11 @@ public class Address
 
 	public String[] toLines()
 	{
-		return new String[]{firstname + " " + lastname, street + " " + number, postalcode + " " + city, country};
+		return new String[]{firstname + " " + lastname, company, street + " " + number, postalcode + " " + city, country,mailAddress};
 	}
 
 	public String toString()
 	{
-		return firstname + " " + lastname + ", " + street + " " + number + ", " + postalcode + " " + city + ", " + country;
+		return firstname + " " + lastname + ", " + street + " " + number + ", " + postalcode + " " + city + ", " + country + " " + mailAddress;
 	}
 }
