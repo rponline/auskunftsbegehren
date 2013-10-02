@@ -42,13 +42,15 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 			to = readRecipientAddress(params);
 		}
 
+		// get participation data
+		String participation = params.get("participation")[0];
 
 		// Generate unique file name for PDF
 		String realFilename = generateUniqueFilename(req.getSession());
 
 		// Generate Auskunftsbegehren PDF
 		try {
-			generateAuskunftsbegehren(from,to,realFilename);
+			generateAuskunftsbegehren(from,to,participation,realFilename);
 		}
 		catch(COSVisitorException e) {
 			e.printStackTrace();
@@ -98,11 +100,12 @@ public class GenerateAuskunftsbegehrenServlet extends HttpServlet
 		return path + session.getId() + ".pdf";
 	}
 
-	private void generateAuskunftsbegehren(Address from, Address to, String path) throws IOException, COSVisitorException
+	private void generateAuskunftsbegehren(Address from, Address to, String participation, String path) throws IOException, COSVisitorException
 	{
 		Auskunftsbegehren ab = new Auskunftsbegehren(Locale.GERMAN);
 		ab.setSender(from);
 		ab.setRecipient(to);
+		ab.setParticipation(participation);
 		ab.save(path);
 	}
 }
